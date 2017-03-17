@@ -1,7 +1,10 @@
-<h1>D3</h1>
+<h1>Artistas VI Salón Maestro</h1>
+</p>
 
 <!-- div donde se inyectará la visualizción de D3js -->
 <div id="viz"></div>
+</p>
+</p>
 
 <!-- carga desde el servidor de D3 la librería -->
 <!-- cabe anotar que esta podría estar alojada localmente en la carpeta -->
@@ -16,8 +19,9 @@ function viz(data){
   // selecciona la división donde se inyectará el SVG
   var svg = d3.select('#viz')
     .append('svg') // agrega un elemento SVG
-    .attr('width', 400) // al SVG le agrega el atributo ancho de 400px
-    .attr('height', 200) // al SVG le agrega el atributo alto de 200px
+    .attr('width', 800) // al SVG le agrega el atributo ancho de 400px
+    .attr('height', 2000) // al SVG le agrega el atributo alto de 200px
+    .attr('style', 'padding-top:50px')
 
   var elem = svg.selectAll('g') // selecciona todos los elementos `g` (grupos)
     .data(data) // enlaza los datos del servidor
@@ -25,29 +29,29 @@ function viz(data){
   var elemEnter = elem.enter()
       .append('g') // agrega un grupo
       .attr('transform', function(d,i){ // aplica una transformación al elemento
-        return "translate("+(80*i+40)+", 80)" // calcula la posción relativo a
+        return "translate( 80, "+(120*i+40)+")" // calcula la posción relativo a
                                               // los datos
       })
 
   var circulo = elemEnter.append('circle') // agrega un circulo
-    .attr('stroke', 'black') // la línea de contorno será negra
+    .attr('stroke', '#365886') // la línea de contorno será negra
     .attr('fill', function(d){ // el color de relleno se aplica según el
                                // resultado de esta función
       if(d.public){     // si el elemento actual es público
-        return 'green'  // el color de relleno será verde
+        return '#43e7ce'  // el color de relleno será verde
       } else {          // de lo contrario (será público)
         return 'red'    // el color de relleno será rojo
       }
     })
 
     .attr('r', function(d){ // el radio dependerá de la cantidad de items en la
-      return d.items.count * 10 // colección
+      return d.items.count * 12 // colección
     })
 
   // crea los textos etiquetando cada uno de los círculos
   var txt = elemEnter.append('text') //agrega un elemento de tipo text
-    .attr('dy', -35) // la posición en y
-    .attr('dx', -20) // la posición en x
+    .attr('dy', -15) // la posición en y
+    .attr('dx', 10) // la posición en x
     .text(function(d){ // extrae el texto de la información del servidor
       return d.element_texts[0].text
     })
@@ -61,11 +65,11 @@ var request = new XMLHttpRequest();
 // servidor proxy para souclionar problemas de CORS (ver README)
 var CORS_PROXY = 'http://192.169.250.12:8088/';
 // usa el proxy?
-var use_cors = false;
+var use_cors = true;
 //la URL del API (http://miomeka.org/api)
-var baseUrl = ''
+var baseUrl = 'http://salondearte.omeka.net/api'
 // el key generado por omeka
-var API_KEY = ''
+var API_KEY = 'b36f2ded198f5fef066d15619441dd4a1fba1cf9'
 
 // comstruye la URL final a partir de los datos suministrados anteriormente
 var URL = '' // variable donde se guardará la URL final
@@ -83,6 +87,7 @@ if (use_cors){
 
 // 2. abre una conexión al servidor usando el método GET
 // la URL debe estar construida así:
+//request.open('GET', 'http://192.169.250.12:8088/http://salondearte.omeka.net/api/collections?key=b36f2ded198f5fef066d15619441dd4a1fba1cf9', true);
 request.open('GET', URL, true);
 
 // cuando se ejecuta la conexión con el servidor y obtenemos respuesta
@@ -91,6 +96,7 @@ request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
     // convertimos la repuesta del servidor en un objeto JSON
     var resp = JSON.parse(request.responseText);
+    console.log(resp)
     // ejecuta la función de visualizacion
     viz(resp)
   } else {
