@@ -42,11 +42,14 @@ Para la actividad de esta semana hay dos formas de enfrentarse a este problema, 
 
 ## Rúbrica
 
+
 |  Criterio  | %      |  Calificación |
 |----------|:-------------:|------:|
-| Redacción, ortografía, citación de fuentes |  40% | - |
-| Suficiencia en la implementación técnica D3.js |    60%   | - |
-| ** Nota Final** | | -|
+| Redacción, ortografía, citación de fuentes |  40% | 4.0 |
+| Suficiencia en la implementación técnica D3.js |    60%   | 4.0 |
+| ** Nota Final** | | 4.0|
+
+El ejercicio cumple con lo esperado para la entrega en el nivel básico.
 
 ## Recursos
 
